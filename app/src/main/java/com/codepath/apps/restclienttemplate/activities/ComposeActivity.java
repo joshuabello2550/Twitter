@@ -1,16 +1,18 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.TwitterApp;
+import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -23,11 +25,9 @@ public class ComposeActivity extends AppCompatActivity {
 
     public static final int MAX_TWEET_LENGTH = 140;
     public static String TAG = "ComposeActivity";
-
-    EditText etCompose;
-    Button btnTweet;
-
-    TwitterClient client;
+    private static EditText etCompose;
+    private static Button btnTweet;
+    private static  TwitterClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class ComposeActivity extends AppCompatActivity {
 
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
-
         client = TwitterApp.getRestClient(this);
 
         // Set click listener on button
@@ -51,25 +50,25 @@ public class ComposeActivity extends AppCompatActivity {
                 if (tweetContent.length() > MAX_TWEET_LENGTH) {
                     Toast.makeText(ComposeActivity.this, "Sorry your tweet is too long", Toast.LENGTH_LONG);
                 }
+
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
                 // Make an API call to Twitter to publish the tweet
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         Log.i(TAG, "onSuccess to publish tweet");
+                        Intent i = new Intent();
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Tweet Published tweet says" + tweet.body);
-                            Intent i = new Intent();
                             i.putExtra("tweet", Parcels.wrap(tweet));
-                            // the result code and bundle the result
-                            setResult(RESULT_OK, i);
-                            // the activity
-                            finish();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        // the result code and bundle the result
+                        setResult(RESULT_OK, i);
+                        // the activity
+                        finish();
                     }
 
                     @Override

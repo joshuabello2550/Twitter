@@ -1,10 +1,11 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.adapters;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,14 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
 
-    Context context;
-    List<Tweet> tweets;
+    private static Context context;
+    private static  List<Tweet> tweets;
     private static final String TAG = "TweetsAdapter";
 
     // Pass in the context and list of tweets
@@ -54,10 +56,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     // Define a viewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivProfileImage;
-        TextView tvBody;
-        TextView tvScreenName;
-        ImageView ivTweetImage;
+        private TextView tvBody;
+        private TextView tvScreenName;
+        private ImageView ivTweetImage;
+        private ImageView ivProfileImage;
+        TextView tvRelativeTime;
+        private ImageButton ibFavorite;
+        private TextView tvFavoriteCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,12 +70,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivTweetImage =  itemView.findViewById(R.id.ivTweetImage);
+//            itemView.setOnClickListener((View.OnClickListener) this);
+            ibFavorite =  itemView.findViewById(R.id.ibFavorite);
+            tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
         }
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+
+//            String test = Tweet.getRelativeTimeAgo(tweet.createdAt);
+//            tvRelativeTime.setText(test);
 
             Log.d(TAG, "tweet image url is " +  tweet.tweetImageUrl);
             if (tweet.tweetImageUrl ==  "none") {
@@ -80,19 +91,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 Glide.with(context).load(tweet.tweetImageUrl).into(ivTweetImage);
             }
 
+            ibFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // if not already favorited
+
+                        // tell twitter I want to favorite this
+
+                        // change the drawable to btn_star_big_on
+
+                        // increment the text in tvFavoriteCount
+
+                    // else if already faovirted
+                        // tell twitter I want to unfavorite this
+
+                        // change the drawable to btn_star_big_off
+
+                        // decrement the text in tvFavoriteCount
+                }
+            });
         }
-    }
 
-    // Clean all elements of the recycler
-    public void clear() {
-        tweets.clear();
-        notifyDataSetChanged();
-    }
+        public void onClick () {
 
-    // Add a list of items -- change to type used
-    public void addAll(List<Tweet> list) {
-        tweets.addAll(list);
-        notifyDataSetChanged();
+        }
+
     }
 
 }
