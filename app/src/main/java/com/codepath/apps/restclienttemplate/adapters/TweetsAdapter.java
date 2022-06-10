@@ -79,6 +79,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 //            itemView.setOnClickListener((View.OnClickListener) this);
             ibFavorite =  itemView.findViewById(R.id.ibFavorite);
             tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
+            tvRelativeTime =  itemView.findViewById(R.id.tvRelativeTime);
+
         }
 
         public void bind(Tweet tweet) {
@@ -86,6 +88,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText(tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
             tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
+            tvRelativeTime.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
 
             Drawable newImage;
             if (tweet.isFavorited) {
@@ -95,10 +98,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             }
             ibFavorite.setImageDrawable(newImage);
-
-
-//            String test = Tweet.getRelativeTimeAgo(tweet.createdAt);
-//            tvRelativeTime.setText(test);
 
             Log.d(TAG, "tweet image url is " +  tweet.tweetImageUrl);
             if (tweet.tweetImageUrl ==  "none") {
