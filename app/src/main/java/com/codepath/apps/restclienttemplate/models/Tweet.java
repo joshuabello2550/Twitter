@@ -102,7 +102,6 @@ public class Tweet {
             Log.i("Tweet", "getRelativeTimeAgo failed");
             e.printStackTrace();
         }
-
         return "";
     }
 }

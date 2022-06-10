@@ -92,9 +92,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             Drawable newImage;
             if (tweet.isFavorited) {
-                newImage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                newImage = context.getDrawable(R.drawable.ic_vector_heart);
             } else {
-                newImage = context.getDrawable(android.R.drawable.btn_star_big_off);
+                newImage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
 
             }
             ibFavorite.setImageDrawable(newImage);
@@ -127,7 +127,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
                         // change the drawable to btn_star_big_on
                         tweet.isFavorited = true;
-                        Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart);
                         ibFavorite.setImageDrawable(newImage);
 
                         // increment the text in tvFavoriteCount
@@ -150,7 +150,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
                         // change the drawable to btn_star_big_off
                         tweet.isFavorited =  false;
-                        Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_off);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
                         ibFavorite.setImageDrawable(newImage);
 
                         // decrement the text in tvFavoriteCount
