@@ -47,18 +47,16 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBody"
-        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="393dp"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -84,36 +82,30 @@
         app:layout_constraintTop_toTopOf="@+id/ibFavorite" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/ibComment"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="68dp"
-        android:layout_marginBottom="16dp"
         android:background="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ibFavorite"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_vector_messages_stroke" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibReply"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="68dp"
-        android:layout_marginBottom="12dp"
         android:background="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ibFavorite"
-        app:layout_constraintVertical_bias="0.4"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
     <ImageButton
         android:id="@+id/ibFavorite"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"

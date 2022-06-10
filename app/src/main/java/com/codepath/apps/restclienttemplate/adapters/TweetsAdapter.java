@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +19,14 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.TwitterApp;
 import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.activities.ComposeActivity;
+import com.codepath.apps.restclienttemplate.activities.ProfileFragment;
+import com.codepath.apps.restclienttemplate.activities.TimelineActivity;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
+import org.parceler.Parcel;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -69,6 +77,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         private TextView tvRelativeTime;
         private ImageButton ibFavorite;
         private TextView tvFavoriteCount;
+        private ImageButton  ibReply;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +89,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ibFavorite =  itemView.findViewById(R.id.ibFavorite);
             tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
             tvRelativeTime =  itemView.findViewById(R.id.tvRelativeTime);
-
+            ibReply =  itemView.findViewById(R.id.ibReply);
         }
 
         public void bind(Tweet tweet) {
@@ -95,7 +104,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 newImage = context.getDrawable(R.drawable.ic_vector_heart);
             } else {
                 newImage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
-
             }
             ibFavorite.setImageDrawable(newImage);
 
@@ -107,6 +115,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 Glide.with(context).load(tweet.tweetImageUrl).into(ivTweetImage);
             }
 
+            favoriteButtonOnClick(tweet);
+            profileImageOnClick();
+            retweetOnClick(tweet);
+        }
+
+        private void profileImageOnClick() {
+            ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
+
+        private void favoriteButtonOnClick (Tweet tweet) {
             ibFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -118,10 +141,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 Log.i(TAG, "should be favorited, go check");
                             }
-
                             @Override
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
                             }
                         });
 
@@ -136,15 +157,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     } else {
                         // else if already favorited
                         // tell twitter I want to unfavorite this
-                        TwitterApp.getRestClient(context).favorite(tweet.id, new JsonHttpResponseHandler() {
+                        TwitterApp.getRestClient(context).unfavorite(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 Log.i(TAG, "should be unfavorited, go check");
                             }
-
                             @Override
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
                             }
                         });
 
@@ -157,6 +176,25 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         tweet.favoriteCount--;
                         tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
                     }
+                }
+            });
+        }
+
+        private void retweetOnClick(Tweet tweet) {
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // popup a compose screen
+                    // ot not a gonna be a brand new tweet, it gonna be a it'll have an extra attribute
+                        // extra attribute: " in reply to status id"
+
+                    Intent i = new Intent(context, ComposeActivity.class);
+//                    i.putExtra("should reply to tweet", true);
+//                    i.putExtra("id_of_tweet_to_reply_to", tweet.id);
+//                    i.putExtra("screen_name_of_tweet_to_reply_to", tweet.user.screenName);
+
+                    i.putExtra("tweet_to_reply_to", Parcels.wrap(tweet));
+                    ((Activity) context).startActivityForResult(i, TimelineActivity.REQUEST_CODE);
                 }
             });
         }
