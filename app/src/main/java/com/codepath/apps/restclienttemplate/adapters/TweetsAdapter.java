@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -65,7 +66,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public int getItemCount() {
         return tweets.size();
     }
-
 
     // Define a viewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -124,7 +124,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivProfileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+//                    FragmentManager fm = getSupportFragmentManager();
+//                    ProfileFragment profileFragment = ProfileFragment.newInstance("Some Title");
+//                    ProfileFragment.show(fm, "fragment_edit_name");
                 }
             });
         }
@@ -184,14 +186,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ibReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // popup a compose screen
-                    // ot not a gonna be a brand new tweet, it gonna be a it'll have an extra attribute
-                        // extra attribute: " in reply to status id"
-
                     Intent i = new Intent(context, ComposeActivity.class);
-//                    i.putExtra("should reply to tweet", true);
-//                    i.putExtra("id_of_tweet_to_reply_to", tweet.id);
-//                    i.putExtra("screen_name_of_tweet_to_reply_to", tweet.user.screenName);
 
                     i.putExtra("tweet_to_reply_to", Parcels.wrap(tweet));
                     ((Activity) context).startActivityForResult(i, TimelineActivity.REQUEST_CODE);

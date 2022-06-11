@@ -51,7 +51,7 @@ public class ComposeActivity extends AppCompatActivity {
                 if (tweetContent.length() > MAX_TWEET_LENGTH) {
                     Toast.makeText(ComposeActivity.this, "Sorry your tweet is too long", Toast.LENGTH_LONG);
                 }
-                Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
+//                Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
 
                 // if we're replying to a tweet
                 if (getIntent().hasExtra("tweet_to_reply_to")) {
